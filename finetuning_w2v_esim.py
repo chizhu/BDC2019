@@ -683,12 +683,11 @@ sub = pd.read_csv('/home/kesci/work/chizhu/submit_rnn.csv',
                   names=['qid', 'aid', 'prob'])
 sub['prob'] = prob.flatten()
 sub.to_csv('/home/kesci/work/chizhu/finetuning_fasttext_esim_testa.csv', index=False, header=False
-           test_gen=gen_train(path='/home/kesci/input/bytedance/bytedance_contest.final_2.csv',
+test_gen=gen_train(path='/home/kesci/input/bytedance/bytedance_contest.final_2.csv',
                               feature=testb_feature, batch_size=4096, label_tag=False, chunk_size=1, shuffle=False)
-           prob=model.predict_generator(test_gen, steps=int(
+prob=model.predict_generator(test_gen, steps=int(
                np.ceil(100000000/4096)), verbose=1)
-           final=pd.read_csv(path+"bytedance_contest.final_2.csv", names=[
+final=pd.read_csv(path+"bytedance_contest.final_2.csv", names=[
                              'query_id', 'query', 'query_title_id', 'title'])[['query_id', 'query_title_id']]
-           final['prob']=prob.flatten()
-           final.to_csv(
-               '/home/kesci/work/chizhu/finetuning_fasttext_esim_testb.csv', index=False, header=False)
+final['prob']=prob.flatten()
+final.to_csv('/home/kesci/work/chizhu/finetuning_fasttext_esim_testb.csv', index=False, header=False)
